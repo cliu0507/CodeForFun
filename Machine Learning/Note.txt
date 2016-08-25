@@ -1,0 +1,33 @@
+Supervised Learning:
+
+1. Linear Regression: http://www.52nlp.cn/coursera公开课笔记-斯坦福大学机器学习第四课多变量
+
+
+2. Decision Tree: http://www.cnblogs.com/leoo2sk/archive/2010/09/19/decision-tree.html
+	重要概念： ID3 Algorithm（重要，用来划分属性确定每层的判别属性是什么）, Tree, Node splitting(节点分裂,attribute splitting), 由entropy熵来衡量如何进行每层node(attribute)的划分
+	http://www.saedsayad.com/decision_tree.htm
+
+3. Random Forest: RF = OOB(out of bag) + Decision Tree
+	In random Forest, randomization is introduced in two forms, first is random bootstrap sample of data to grow a tree, Second is a random selected subset of variables(covariate)其实就是attribute的splitting
+	理解为很多个随机大小的决策树组合 然后取最高分数的结果
+
+4. Bayesian classifier:贝叶斯分类器：
+	http://kb.cnblogs.com/page/76194/  非常好的朴素贝叶斯分类器讲解，最后讲了如何进行多样本的训练和prediction
+	主要是利用的贝叶斯公式：（先验概率 后验概率的那个）
+	以上的是朴素贝叶斯，要求所有属性独立或者基本独立，然而现实并不如此，所以使用贝叶斯网络
+
+5. SVM: Support Vector Machine：
+	a support vector machine constructs a hyperplane or set of hyperplanes in a high- or infinite-dimensional space, which can be used for classification, regression, or other tasks. 超平面分割 a good separation is achieved by the hyperplane that has the largest distance to the nearest training-data point of any class (so-called functional margin), since in general the larger the margin the lower the generalization error of the classifier.好的分割会让样本聚类最远
+
+
+6. Neural Networks(监督和非监督都有): 
+
+
+
+Unsupervised Learning:
+
+1. Clustering analysis（主要就是这个）: find similarity between examples
+	a. (Center-Based partition) K-Means
+	b. Based on Model: 高斯混合分布 GMM,Gaussian Mixture Model, 多项式混合分布,multinomial mixture model
+
+
