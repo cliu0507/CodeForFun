@@ -31,3 +31,15 @@ Unsupervised Learning:
 	b. Based on Model: 高斯混合分布 GMM,Gaussian Mixture Model, 多项式混合分布,multinomial mixture model
 
 
+
+
+
+
+
+重要名词：
+
+1. bootstrap sample date,training date:训练数据
+2. variable/feature/attribute：features and distinct traits that can be used to describe each item in quantitative manner
+3. feature vector: 观测的长特征
+4. Label: 待分类的类名 
+
