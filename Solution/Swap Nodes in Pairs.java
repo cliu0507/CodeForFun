@@ -61,7 +61,7 @@ public class Solution {
     }
 }
 
-Solution3: Use dummy Nodes
+Solution3: Use dummy Nodes -- more neat
 public ListNode swapPairs(ListNode head) {
     ListNode dummy = new ListNode(0);
     dummy.next = head;
