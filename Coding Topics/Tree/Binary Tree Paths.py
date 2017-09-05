@@ -83,7 +83,36 @@ class Solution(object):
                     nodestack.append(node.right)
                     pathstack.append(string+str(node.val)+"->")  
             return result
-                    
+              
+
+另外一种stack的写法（和inorder stack相似）
+有一个pathstack存储path to current node(不包括当前node)
+class Solution(object):
+    def binaryTreePaths(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[str]
+        """
+        result = []
+        nodestack = []
+        pathstack = []
+        cur = root
+        path = ""
+        while(cur!=None or len(nodestack)!=0):
+            while(cur!=None):
+                nodestack.append(cur)
+                pathstack.append(path)
+                path = path + "->"+ str(cur.val)
+                cur = cur.left
+            cur = nodestack.pop()
+            path = pathstack.pop()
+            if cur.right == None and cur.left == None:
+                result.append(path+"->"+str(cur.val))
+            path = path + "->"+ str(cur.val)
+            cur = cur.right 
+        return [string[2:] for string in result]
+
+
 BFS queue:
 class Solution(object):
     def binaryTreePaths(self, root):
