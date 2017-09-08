@@ -1,0 +1,14 @@
+Subtree Stucture
+
+检查子树结构一般都需要一个helper函数
+
+子树如果出现不连续，或者需要多个子树信息的时候
+可以返回多个值（如果使用python）
+比如说size和count这种非负值的情况 可以把符号当做flag用
+
+
+这种递归结构类似于postorder traversal
+
+Tree类的另一个递归转迭代的思路就是观察递归是preorder,inirder 还是postorder
+然后对应的靠stack保存状态模拟整个过程
+
