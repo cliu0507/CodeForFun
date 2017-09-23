@@ -1,0 +1,15 @@
+Deep learning math basic
+http://wiki.fast.ai/index.php/Calculus_for_Deep_Learning
+https://theclevermachine.wordpress.com/2014/09/06/derivation-error-backpropagation-gradient-descent-for-neural-networks/
+
+Back propagation
+https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
+https://becominghuman.ai/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c
+
+Recurrent Neural Network using Tensor Maths
+https://medium.com/towards-data-science/recurrent-neural-network-using-tensor-maths-af63b95bf7a8
+https://brilliant.org/wiki/recurrent-neural-network/
+
+
+LSTM
+http://arunmallya.github.io/writeups/nn/backprop.html
