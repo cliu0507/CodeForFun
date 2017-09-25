@@ -54,7 +54,15 @@ A graph can be parameterized to accept external inputs, known as placeholders. A
 a = tf.placeholder(tf.float32)
 b = tf.placeholder(tf.float32)
 adder_node = a + b  # + provides a shortcut for tf.add(a, b)
+
+placeholder(
+    dtype,
+    shape=None,
+    name=None
+)
 ```
+dtype: The type of elements in the tensor to be fed.
+shape: The shape of the tensor to be fed (optional). If the shape is not specified, you can feed a tensor of any shape.
 
 
 ## Variable
