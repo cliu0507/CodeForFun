@@ -26,7 +26,7 @@ set as the resultant array.
 
 
 Method 2:
-BackTracking + BFS 
+BackTracking + DFS 
 Use swap (check whether swapped items are equal, if equal then swap)
 
 Given s = "aabb", return ["abba", "baab"].
@@ -53,11 +53,11 @@ class Solution:
 				else:
 					st += str(key)*int(freq(key)/2)
 			oddLength = False
-			permute(st,cur,center,result)
+			permute(st,0,center,result)
 			return result
 
 	def permute(self,st,cur,center,result):
-		if end = len(st):
+		if cur == len(st):
 			result.add(st + (center == None ? center:"") + st[::-1])
 		else:
 			for i in range(cur,st.length()):
