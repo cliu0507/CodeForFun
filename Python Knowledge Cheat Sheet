@@ -6,3 +6,10 @@
   
 3. item.copy() vs item.deepcopy()
 
+
+
+
+Some strategies for avoid overfitting? What's their advantages and disadvantages?
+Implement the pseudo code of SkipGram algorithm
+Some methods to extend binary classifier to multi-way classifier? advantages vs. disadvantages?
+What's gradient vanishing/explosion? How does LSTM solve this problem?
