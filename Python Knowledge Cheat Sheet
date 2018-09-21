@@ -1,0 +1,8 @@
+1. create empty set:
+  use a = set() rather than a ={} --- this will be a list
+
+2. create a list of sets
+  c = [set() for i in range(9) ]  vs. c = [set()] * 9
+  
+3. item.copy() vs item.deepcopy()
+
