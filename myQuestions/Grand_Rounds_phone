@@ -1,0 +1,95 @@
+
+Coding: implement Kmeans
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+# Implement this k-means in the language of your choice.
+
+# Input
+# -------
+# X: [n_samples, d_dimensional] array of location vectors
+# k: number of clusters
+
+
+
+# Algorithmic steps
+# ------------------
+# 1. Initialize the cluster centers
+
+# Run in loop:
+# 2. Determine cluster assignements for each point
+# 3. Calculate new centroid
+
+
+#python implementation:
+
+import numpy as np  
+#import heapq
+import math
+
+def distance(a,b):
+    dis = 0
+    for i in range(len(a)):
+       dis += (a[i] - b[i]) * (a[i]- b[i])
+    return math.sqrt(dis)
+
+def ifConverge(newCentroids,centroids):
+    #code here
+
+def KMeans(X,k):
+    '''
+    para:
+        X, 
+        k
+    return:
+        list of centroids
+    '''
+    if k <= 1 :
+        print "wrong k!"
+        return None
+    else:
+        X_shuffle = np.random.shuffle(X)
+        centroids = X_shuffle[:k] # [k x d]
+        
+        while True:
+            dic = dict()
+            for k,point in enumerate(X_shuffle):
+                #point shape : [d]
+                assigned_cluster = -1
+                min_dis = sys.maxint
+                for i,centroid in enumerate(centroids):
+                    #cebtroid shape: [d]
+                    cur_dis = distance(centroid,point)
+                    if cur_dis < min_dis:
+                        assigned_cluster = i
+                        min_dis = cur_dis
+                
+                if not assigned_cluster in dic:
+                    dic[assigned_cluster] = set()
+                    dic[assigned_cluster].add(k)
+                else:
+                    dic[assigned_cluster].add(k)
+            
+            newCentroids = np.zeros_like(centroids)
+            for assigned_cluster in dic.keys():
+                
+                point_set = dic[assigned_cluster]
+                newCentroid = np.zeros_like(cenrtroids[0])
+                
+                temp = 0
+                for j in len(X_shuffle[k]):
+                    for k in point_set:
+                        temp+=X_shuffle[k][j]
+                    newCentroid[j] = float(temp)/len(point_set)
+            if ifConverge(newCentroids,centroids):
+                break
+                
+            centroids = newCentroid
+                
+
+
+Follow up questions:
+1. how to opimize kmean if there is outliers(i answered k-metroid)
+2. how to decide k (i said elbow method)
+3. how to distribute to multiple machine (i said parameter server, distributing the training in multiple machine)
+4. how could mapreduce help? (i said map to do distance computation, reduce part does centroid update and cluster assignment)
+    
+    
