@@ -1,0 +1,61 @@
+Give a 2d matrix (int)
+
+Algorithm to split the matrix to k groups / clusters?
+
+Input: [[]]
+
+
+Simple questions:
+Give you a 2d matrix
+
+Also give you k Groups (segmented),Give you pixel represented as (x, y)
+P1 and P2 → cluster the group of P1 and group of P2 into a single group?
+(2, 1), (1,1)
+
+
+
+
+Def func(Groups,P1,P2,matrix): 
+#Groups = [set(), set(), set()]
+groupIdP1 = -1
+groupIdP2 = -1
+For i,group in enumerate(groups):
+	If P1 in group and P2 in group:
+		Return Groups, matrix
+
+	if P1 in group:
+		groupIdP1 = i
+	If P2 in group:
+		groupIdP2 = i
+
+For p in Groups[groupIdP1]:
+	DirX = [-1,1,-1,1]
+	DirY = [1,-1,-1,1]
+	For i in range(4):
+		neighbor_X = p[0] + DirX[i]
+		neighbor_Y = p[1] + DirY[i]
+		If neighbor_X >= 0 and neighbor_X < len(matrix) \
+And neighbor_Y>= 0 and neighbor_Y < len(matrix[0]):
+If (neighbor_X,neighbor_Y) in Groups[groupIdP2]:
+merge(groupIdP1, groupIdP2, Groups)
+Return Groups,matrix 
+	Return False
+
+Def merge(groupIdP1, groupIdP2, Groups):
+	Temp1 = Groups.remove(groupIdP1)
+	Temp2 = Groups.remove(groupIdP2)
+	mergedGroup = Temp1.union(Temp2)
+	Groups.append(mergedGroup)
+	return
+		
+	
+Follow up: 
+
+How to decide which two to merge?
+Answer: by analyzing medium,average, std of two clusters and distance
+
+How to do k cluster segmentation by utilizing above functionalities?
+Answer: start with number of pixel clusters and merge clusters to exact K cluster
+
+
+
