@@ -1,0 +1,84 @@
+
+# Your previous Plain Text content is preserved below:
+# 
+# Qwerty-based encryption
+# We need you to write an encryption method which takes an input string and prints out the results.
+# The encryption algorithm that we want you to implement will use a standard querty keyboard, with flags to shift (rotate) the keys horizontally or vertically.  To simplify, we will only use ten characters from each row on a query keyboard: 
+#
+# qwertyuiop
+# asdfghjkl;
+# zxcvbnm,./
+# 
+# For example: 
+# > encrypt "hello world" -h 5
+# would move each letter 5 places to the right and print:
+# 
+# > aiffr urofk
+# 
+# When a letter gets to the edge, it loops around to the other side.
+# 
+# Another example:
+# > encrypt "hello world" -v 2
+# would move each letter down 2 places on the keyboard (again looping around from the bottom) and print:
+# 
+# > ycoo. x.voe
+# 
+# Both flags may be included at the same time.
+# > encrypt "hello world" -v 2 -h 5
+# Would first wrap vertically and then horizontally
+# 
+
+
+def encryption(string,direction,offset,offset2=None):
+    '''
+    parameter:
+        string
+        direction: h,v,hv
+    '''
+    
+    dic = dict()
+    '''
+    qwertyuiop
+    asdfghjkl;
+    zxcvbnm,./
+    '''
+    lst = ["qwertyuiop","asdfghjkl;","zxcvbnm,./"]
+    for i in range(3):
+        for j in range(10):
+            dic[lst[i][j]] = (i,j)
+    
+    '''
+    q: (0,0)
+    h: (1,5)
+    '''
+    
+    
+    result = ""
+    for char in string:
+        
+        if not char in dic:
+            result += char
+            continue
+            
+        i = dic[char][0]
+        j = dic[char][1]
+        
+        if direction == "h":
+            j = (j + offset) % 10
+        elif direction == "v":
+            i = (i + offset) % 3
+        else:
+            j = (j + offset) % 10
+            i = (i + offset2) % 3
+            
+        result += lst[i][j]
+    return result
+
+
+#"hello world" -h 5
+#print(encryption("hello world","h",5))
+#print(encryption("hello world","v",2))
+print(encryption("hello world","hv",5,2))
+
+
+
