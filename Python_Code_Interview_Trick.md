@@ -7,6 +7,11 @@ for i in range(0,n):
 	else:
 		dfs(used,path,result)
 ```
+followup: 如何改变used的第i个bit的表示:
+```
+used = used - (1<<i) 
+这相当于将used的bit表示的第i位置为0
+```
 
 2. 2^n 和 n! 计算机可以做到多少n?
 ```
