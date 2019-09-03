@@ -17,3 +17,18 @@ used = used - (1<<i)
 ```
 ans: 2^n 可以做到n = 20; n!一般也就做到n=10就可能溢出了
 ```
+
+
+3. BFS 中如何遍历完一个完整level再跳出返回结果 （经典bfs一旦找到一个结果就会break for loop）：
+```
+idea: 使用一个found变量，再多加一个内部的for loop遍历一个整层level.：
+
+q 是 queue
+while (!q.empty() && !found) {
+	for (int size = q.size(); size > 0; size--) {
+		if 找到结果:
+			found = True
+			
+	}
+}
+```
