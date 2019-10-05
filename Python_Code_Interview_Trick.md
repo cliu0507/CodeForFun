@@ -32,3 +32,37 @@ while (!q.empty() && !found) {
 	}
 }
 ```
+
+4. Binary Search 模版 1
+leetcode No.35
+找应该插入在哪个位置：假设没有重复 
+```
+class Solution(object):
+    def searchInsert(self, nums, target):
+        low = 0
+        high = len(nums)-1
+        while low <= high:
+            mid = (low+high)/2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                high = mid - 1
+            else:
+                low = mid + 1
+        return low
+```
+注意1： 为什么要return low 而不是high:
+因为数组index的不对称性，例子：
+[1,3,5] target = 4
+	low = 0, high = 2, mid = 1: nums[mid] < target
+	low = 2, high = 2, mid = 2; nums[mid] > target
+	low = 2, high = 1, break , insert在 index = 2的位置
+
+[1,3,5] target = 6
+	low = 0, high = 2, mid = 1: nums[mid] < target
+	low = 2, high = 2, mid = 2; nums[mid] > target
+	low = 3, high = 2, break , insert在 index = 3的位置	
+
+
+注意2: 为什么不用左边界的search index算法：
+因为左边界的search 返回的结果index只能是 [0,len(nums)-1],（因为搜索的结束条件是 low < end, 而不是low == end, 换句话说，low或者high无法被设置成len(nums)）
