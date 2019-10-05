@@ -66,3 +66,22 @@ class Solution(object):
 
 注意2: 为什么不用左边界的search index算法：
 因为左边界的search 返回的结果index只能是 [0,len(nums)-1],（因为搜索的结束条件是 low < end, 而不是low == end, 换句话说，low或者high无法被设置成len(nums)）
+
+
+5. binary search 找左边界算法
+
+例子 [1,2,4,4,4,6,7] target = 4
+找第一个出现target , 前提是数组里存在target
+```
+def low_bound(nums,target):
+            #basically the first element index >= target
+            low = 0
+            high = len(nums)-1
+            while low < high:
+                mid = (low + high)/2
+                if nums[mid] >= target:
+                    high = mid
+                else:
+                    low = mid + 1
+            return low if nums[low] == target else -1
+```
