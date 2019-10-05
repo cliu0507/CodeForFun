@@ -70,18 +70,108 @@ class Solution(object):
 
 5. binary search 找左边界算法
 
-例子 [1,2,4,4,4,6,7] target = 4
-找第一个出现target , 前提是数组里存在target
+例子 [1,2,4,4,4,6,7] target = 4 \
+找第一个出现target , 前提是数组里存在target,return 2 \
 ```
 def low_bound(nums,target):
-            #basically the first element index >= target
-            low = 0
-            high = len(nums)-1
-            while low < high:
-                mid = (low + high)/2
-                if nums[mid] >= target:
-                    high = mid
-                else:
-                    low = mid + 1
-            return low if nums[low] == target else -1
+    #basically the first element index >= target
+    low = 0
+    high = len(nums)-1
+    while low < high:
+        mid = (low + high)/2
+        if nums[mid] >= target:
+            high = mid
+        else:
+            low = mid + 1
+    return low if nums[low] == target else -1
 ```
+```
+如果数组里没有这个target：low/high代表着什么？\
+
+例子 [1,2,4,4,4,6,7] target = 3 \
+	(0,3,6) -> (0,1,3) -> (2,2,3) -> (2,\,2) -> basically return 2, 代表需要插入的index
+     [1,2,4,4,4,6,7] target = 0 \
+     	(0,3,6) -> (0,1,3) -> (0,0,1) -> (0,\,0) -> basically return 0, 代表需要插入的index
+     [1,2,4,4,4,6,7] target = 6.5 \
+	(0,3,6) -> (4,5,6) -> （6,\,6)               basically return 6, 代表需要插入的index (和下面的矛盾)
+     [1,2,4,4,4,6,7] target = 8 \
+     	(0,3,6) -> (4,5,6) -> (6,\,6)               basically return 6, 代表需要插入的index + 1 不符合上面的规律！！！
+
+总结：哪怕是python的bisect 功能也不支持 在没有target的情况下找到insert的位置；换句话说low,high没有意义！
+
+
+发散： 
+那么high/low 到底可以如何理解呢？请看下面的function
+返回值代表的意义是：
+数组中 到底有多少个元素 严格小于 target
+
+def low_bound2(nums,target):
+    #basically the first element index >= target
+    low = 0
+    high = len(nums)-1
+    while low < high:
+        mid = (low + high)/2
+        if nums[mid] >= target:
+            high = mid
+        else:
+            low = mid + 1
+    if nums[low] < target:
+    	return low + 1
+    return low
+
+```
+
+6. binary search 找右边界算法
+
+例子 [1,2,4,4,4,6,7] target = 4 \
+找最后一个出现target , 前提是数组里存在target,return 4 \
+```
+def upper_bound(nums, target):
+    low = 0
+    high = len(nums) - 1
+    while low < high:
+        mid = (low + high)/2 + 1 #注意 这个条件是保障不死循环的！因为 nums[mid] == target的情况下会需要更新low， 
+			         #如果还用 mid = (low+high)/2的话，当只有两个元素的时候，low和mid永远相等会进入死循环
+        if nums[mid] <= target:
+            low = mid
+        else:
+            high = mid - 1
+    return high if nums[high] == target else -1
+```
+
+```
+如果数组里没有这个target：low/high代表着什么？\
+
+例子 [1,2,4,4,4,6,7] target = 3 \
+	(0,4,6) -> (0,2,3) -> (1,2,2) -> (1,\,1)    basically return 1, 代表需要插入的index - 1 
+     [1,2,4,4,4,6,7] target = 1.5 \
+     	(0,4,6) -> (0,2,3) -> (0,1,1) -> (0,\,0)    basically return 0, 代表需要插入的index - 1 （和上面的矛盾）
+     [1,2,4,4,4,6,7] target = 0 \
+     	(0,4,6) -> (0,2,3) -> (0,1,1) -> (0,\,0)    basically return 0, 代表需要插入的index 
+     [1,2,4,4,4,6,7] target = 8 \
+     	(0,4,6) -> (4,6,6) -> (6,\,6)               basically return 6, 代表需要插入的index - 1 不符合上面的规律！！！
+
+总结：哪怕是python的bisect 功能也不支持 在没有target的情况下找到insert的位置；换句话说low,high没有特别意义！
+
+发散：
+那么high/low 到底可以如何理解呢？请看下面的function
+返回值代表的意义是：
+数组中 到底有多少个元素 小于等于 target
+
+def upper_bound2(nums, target):
+    low = 0
+    high = len(nums) - 1
+    while low < high:
+        mid = (low + high)/2 + 1 #注意 这个条件是保障不死循环的！因为 nums[mid] == target的情况下会需要更新low， 
+			         #如果还用 mid = (low+high)/2的话，当只有两个元素的时候，low和mid永远相等会进入死循环
+        if nums[mid] <= target:
+            low = mid
+        else:
+            high = mid - 1
+    if nums[high] <= target: #重点！！！
+        return high + 1
+    return high
+
+```
+
+
