@@ -103,7 +103,7 @@ def low_bound(nums,target):
 发散： 
 那么high/low 到底可以如何理解呢？请看下面的function
 返回值代表的意义是：
-数组中 到底有多少个元素 严格小于 target
+数组中 到底有多少个元素 严格小于 target 
 
 def low_bound2(nums,target):
     #basically the first element index >= target
@@ -153,10 +153,10 @@ def upper_bound(nums, target):
 
 总结：哪怕是python的bisect 功能也不支持 在没有target的情况下找到insert的位置；换句话说low,high没有特别意义！
 
-发散：
+发散：leetcode 378
 那么high/low 到底可以如何理解呢？请看下面的function
 返回值代表的意义是：
-数组中 到底有多少个元素 小于等于 target
+数组中 到底有多少个元素 小于等于 target 
 
 def upper_bound2(nums, target):
     low = 0
