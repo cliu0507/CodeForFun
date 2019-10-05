@@ -54,14 +54,14 @@ class Solution(object):
 注意1： 为什么要return low 而不是high:
 因为数组index的不对称性，例子：
 [1,3,5] target = 4
-	low = 0, high = 2, mid = 1: nums[mid] < target
-	low = 2, high = 2, mid = 2; nums[mid] > target
+	low = 0, high = 2, mid = 1: nums[mid] < target\
+	low = 2, high = 2, mid = 2; nums[mid] > target\
 	low = 2, high = 1, break , insert在 index = 2的位置
 
 [1,3,5] target = 6
-	low = 0, high = 2, mid = 1: nums[mid] < target
-	low = 2, high = 2, mid = 2; nums[mid] > target
-	low = 3, high = 2, break , insert在 index = 3的位置	
+	low = 0, high = 2, mid = 1: nums[mid] < target\
+	low = 2, high = 2, mid = 2; nums[mid] > target\
+	low = 3, high = 2, break , insert在 index = 3的位置	\
 
 
 注意2: 为什么不用左边界的search index算法：
