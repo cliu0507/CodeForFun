@@ -119,6 +119,24 @@ def low_bound2(nums,target):
     	return low + 1
     return low
 
+
+发散2: 刷leetcode时候发现另一种写法也可以：不知道为什么！
+[1,2,3,4,4,6,7]
+(0,3,6)
+(0,1,2)
+(1,1,2)
+(2,2,2)
+def low_bound3(nums,target):
+    #basically the first element index >= target
+    low = 0
+    high = len(nums)-1
+    while low <= high:
+        mid = (low + high)/2
+        if nums[mid] >= target:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return low
 ```
 
 6. binary search 找右边界算法
