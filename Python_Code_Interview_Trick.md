@@ -195,3 +195,16 @@ def upper_bound2(nums, target):
 7. 数据规模
 N = 12 基本上是 N! 算法的极限
 N = 20000 基本上是 N^2 算法的极限
+N = 1000 基本上支持 N^3 算法
+
+8. 几种图的算法：
+	1. dijkstra algorithm - single source all destination:
+		time: O(N * N) if use adjacent matrix, O(Nlogn) if use heap
+		space:O(N + E)
+	2. Bellmon-Ford algorithm - single source all destination: (DP)
+		time : O(N * E),
+		space: O(NE)
+		it supports negative edges
+	3. Floyd-warshall (all pairs). any source to all destination
+		time: O(N^3)
+		space: O(N*N)
