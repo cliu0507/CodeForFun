@@ -253,3 +253,5 @@ example_graph = {
     'Z': {'W': 5, 'Y': 1},
 }
 ```
+10. Queue.Queue()
+q.qsize(). note:len(q)不存在
