@@ -253,5 +253,38 @@ example_graph = {
     'Z': {'W': 5, 'Y': 1},
 }
 ```
-10. Queue.Queue()
+
+10. Queue.Queue() \
 q.qsize(). note:len(q)不存在
+
+
+11. Heap in Python \
+Python only has min heap \
+If we need max heap, we need to put -value to heap, and apply "-1.0 * val" while retrieval
+
+heapify(iterable) :- This function is used to convert the iterable into a heap data structure \
+heappush(heap, ele) :- This function is used to insert the element mentioned in its arguments into heap \
+heappop(heap) :- This function is used to remove and return the smallest element from heap.  \
+
+```
+import heapq
+li = [5, 7, 9, 1, 3] 
+heapq.heapify(li)  #inplace
+print (list(li))  # print list
+heapq.heappush(li,4) 
+print(heapq.heappop(li))
+
+```
+
+12. Heap with Tuple/Prority Queue in Python \
+you can use tuples, and it will sort by the first element of the tuple \
+So if you don't want to (or can't?) do a __cmp__ method, you can manually extract your sorting key at push time \
+
+Note: if there are three element tuple, then use second element if there is a tier in first element
+```
+>>> h = []
+>>> heappush(h, (5, 'write code'))
+>>> heappush(h, (7, 'release product'))
+>>> heappush(h, (1, 'write spec'))
+>>> heappush(h, (3, 'create tests'))
+```
