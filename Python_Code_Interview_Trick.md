@@ -292,3 +292,53 @@ Note: if there are three element tuple, then use second element if there is a ti
 13. Segment tree:
 Segment tree 比 树状数组应用场景的多。 而且好理解
 https://zxi.mytechroad.com/blog/sp/segment-tree-sp14/
+
+注意其实没必要做一个class 可以直接用finction
+def build()
+def update()
+...
+```
+
+class Node(object):
+    def __init__(self,start,end, sum, left=None, right=None):
+        self.start = start
+        self.end = end
+        self.sum = sum
+        self.left = left
+        self.right = right
+
+
+class SegmentTree(object):    
+    def build(self, start, end, nums):
+        if start == end:
+            return Node(start, end, nums[start])
+        else:
+            mid = (start+end)/2
+            left = self.build(start, mid, nums)
+            right = self.build(mid+1, end, nums)
+            return Node(start, end, left.sum + right.sum, left, right)    
+    
+    def update(self, root, index, value):
+        if root.start == index and root.end == index:
+            root.sum = value
+            return
+        mid = (root.start + root.end)/2
+        if index <= mid: # need to update leftside
+            self.update(root.left, index, value)
+        else:
+            self.update(root.right, index, value)
+        root.sum = root.left.sum + root.right.sum
+    
+    def rangeQuery(self, root, i, j):
+        #print i, j,
+        #print root.sum,"hihihi"
+        if root.start == i and root.end == j:
+            return root.sum
+        mid = (root.start + root.end)/2
+        if j <= mid:
+            return self.rangeQuery(root.left, i , j)
+        elif i > mid:
+            return self.rangeQuery(root.right,i , j)
+        else:
+            return self.rangeQuery(root.left, i , mid) + self.rangeQuery(root.right, mid+1 , j)
+```
