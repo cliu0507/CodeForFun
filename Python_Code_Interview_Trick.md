@@ -288,3 +288,7 @@ Note: if there are three element tuple, then use second element if there is a ti
 >>> heappush(h, (1, 'write spec'))
 >>> heappush(h, (3, 'create tests'))
 ```
+
+13. Segment tree:
+Segment tree 比 树状数组应用场景的多。 而且好理解
+https://zxi.mytechroad.com/blog/sp/segment-tree-sp14/
