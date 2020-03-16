@@ -1,0 +1,7 @@
+Pytorch vs Torchscript
+https://program-transformations.github.io/slides/pytorch_neurips.pdf
+
+
+Why python is slow:
+Python is great for putting your quantitative ideas clearly and succinctly, but interior loops in Python have always been slow due to the absence of type information. Python’s duck typing system really comes to bite when this absence of typing creates unnecessary code and indirection, leading to relatively slow inner loops. 
+
