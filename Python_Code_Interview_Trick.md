@@ -342,3 +342,17 @@ class SegmentTree(object):
         else:
             return self.rangeQuery(root.left, i , mid) + self.rangeQuery(root.right, mid+1 , j)
 ```
+
+14. Union Find Python Imple
+```
+def find(parent, i):
+            if parent[i] == i:
+                return i
+            return find(parent, parent[i])
+        
+        def union(parent, x, y):
+            xset = find(parent, x)
+            yset = find(parent, y)
+            if xset != yset:
+                parent[xset] = yset
+```
