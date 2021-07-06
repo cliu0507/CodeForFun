@@ -355,4 +355,72 @@ def find(parent, i):
             yset = find(parent, y)
             if xset != yset:
                 parent[xset] = yset
+
+优化：
+有一种优化可以balance union find里面的tree 
+通过选择 parent[xset] = yset 还是parent[yest] = xset （大树接小数 还是小数接大树）
+前提是需要有额外的data structure来保存parent[xset] 和parent[yset]的树的size
+一般用一个dict[i] = size来track和update
+
+```
+
+15. Trie
+其实也可以把search/insert 放到solution class之中
+```
+class Trie:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = {}
+        self.endmark = '#'
+        
+
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        curNode = self.root
+        for char in word:
+            if char in curNode:
+                curNode = curNode[char]
+            else:
+                curNode[char] = {}
+                curNode = curNode[char]
+        curNode[self.endmark] = True
+        
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie.
+        """
+        curNode = self.root
+        for char in word:
+            if char in curNode:
+                curNode = curNode[char]
+            else:
+                return False
+        #print(self.root)
+        return self.endmark in curNode
+        
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        curNode = self.root
+        for char in prefix:
+            if char in curNode:
+                curNode = curNode[char]
+            else:
+                return False
+        return True
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
 ```
