@@ -184,3 +184,7 @@ give a list of rectange [[rec_w, rec_h], [rec_w, rec_h].....]
 write a function to check if ALL rectangles can fit into board without covering hole
 
 
+WeRide AI
+1. A BFS problem to find if it can reach to a place on a board
+2. A prefix sum problem . 2D matrix, if not using prefixsum, it will be o(n^ 4)
+3. connected componenet (union find). Need to balance the union find tree to pass the last test case
