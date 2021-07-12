@@ -110,6 +110,28 @@ if __name__ == "__main__":
 
 2.  Newton Method
 
+root finding algorithm
+to find root of f(x) = 0
+
+f(x) = f(x0) + f'(x0)(x-x0)
+
+x0 - x = f(x0)/f'(x0)
+x = x0 - f(x0)/f'(x0)
+
+if solving f(x) = x ^ 2
+find 8's sqrt root
+
+then
+f(x) = x ^ 2 - 8 = 0
+f'(x) = 2x
+
+start with
+x0 = 8/2 = 4
+x1 = x0 - 4 ^ 2 / 2* 4 = 4 - 2 = 2
+
+
+https://zhuanlan.zhihu.com/p/105265432
+
 ```
 def newton(m):
     x0 = m/2 #初始点，也可以是别的值
