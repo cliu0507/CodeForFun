@@ -1,0 +1,186 @@
+Snap 1
+
+ML question:
+1. How do you choose SVM vs Logistic regression, which model is suitable for each senario 
+2. Why not random forest
+3. How to handle one tag belongs to multiple class? Answer: one vs rest ???? seems to be wrong
+4. How to choose threshold of a classification problem.? if using logistic regression, if using SVM
+5. HOW TO COMpare logistic regression vs SVM if those two models have many threshold candidates to choose (precision-recall tradeoff)  
+
+
+'''
+we are given the reference to the root of a binary tree.
+Each node can take one of R/G/B colors. 
+Under the constraint that a red node cannot be 
+directly connected to a green node in the tree, 
+find how many ways to color the tree.
+
+T(node, 'G') = (1 * T(node.left,'G') + 0 * T(node.left,'R') + 1 * T(node.left,'B')) * 
+(1 * T(node.right,'G') + 0 * T(node.right,'R') + 1 * T(node.right,'B'))
+
+T(node, 'B')
+
+T(node, 'R')
+
+'''
+
+class TreeNode:
+    def __init__(self):
+        self.left = None
+        self.right = None        
+        
+def colorTree(node):
+    '''
+    input: TreeNode
+    output: number of different ways
+    '''
+    res = helper(node, 'G') + helper(node, 'B') + helper(node, 'R')  
+    return res
+
+
+def helper(node, color):
+    if not node:
+        return 1
+    left_res = 0 if node.left else 1
+    right_res = 0 if node.right else 1
+        
+    
+    if node.left:
+        if color == 'G':
+            left_res += (helper(node.left, 'G') + helper(node.left, 'B'))
+        if color == 'B':
+            left_res += (helper(node.left, 'G') + helper(node.left, 'B') +  helper(node.left, 'R'))
+        if color == 'R':
+            left_res += (helper(node.left, 'B') +  helper(node.left, 'R'))
+    if node.right:
+        if color == 'G':
+            right_res += (helper(node.right, 'G') + helper(node.right, 'B'))
+        if color == 'B':
+            right_res += (helper(node.right, 'G') + helper(node.right, 'B') +  helper(node.right, 'R'))
+        if color == 'R':
+            right_res += (helper(node.right, 'B') +  helper(node.right, 'R'))
+    res = left_res * right_res
+    return res
+
+    
+if __name__ == '__main__':
+    a = TreeNode()
+    
+    a.left = TreeNode()
+    a.right = TreeNode()
+    res = colorTree(a)
+    
+    print(res)
+    
+    
+Intuit 1:
+"""
+Given an (unsorted) integer array and one integer, please return whether you can find 2 integers in this array of which their sum equals to the given integer.
+
+For example, given Array = [6, 4, -1, 8] and sum = 10 Return true, since 6 + 4 = 10
+Given Array = [6, 4, -1, 8] and sum = 2 Return false, since we cannot find 2 integers that sum up to 2
+"""
+
+'''
+Given an (unsorted) integer array and one integer, please return whether you can find 3 integers in this array of which their sum equals to the given integer.
+For example, given Array = [6, 4, -1, 8] and sum = 11 Return true, since 4 + 8 + (-1) = 11
+Given Array = [6, 4, -1, 8] and sum = 7 Return false, since we cannot find 3 integers that sum up to 7
+
+
+'''
+
+
+
+def find2Sum(arr, hashset, target):
+    '''
+    input: list of int
+    output: bool, true false
+    '''
+    # a + b = target ==> a = target - b  
+    #hashset = set()
+    N = len(arr)
+    for i in range(N):
+        if (target - arr[i]) in hashset:
+            return True
+        #hashset.add(arr[i])
+    return False
+    
+
+def find3Sum(arr, target):
+    if len(arr) < 3:
+        return False
+    N = len(arr)
+    i = 2
+    
+    hashset = set()
+    hashset.add(arr[0])
+    hashset.add(arr[1])
+    while i < N:
+        print(list(hashset))
+        new_target = target - arr[i]
+        print(arr[:i], hashset, new_target)
+        if find2Sum(arr[:i], hashset, new_target):
+            return True
+            
+        hashset.add(arr[i])
+        i += 1
+        
+    return False
+        
+        
+if __name__ == '__main__':
+    
+    arr_list = []
+    #tuple1 = ([6, 4, -1, 8], 10)
+    #tuple2 = ([], 9)
+    #tuple3 = ([2,2,5], 8) 
+    tuple4 = ([6, 4, -1, 8], 9)
+    '''
+    all negative 
+    only one element in arr
+    extreme large numbers
+    '''
+    #arr_list.append(tuple1)
+    #arr_list.append(tuple2)
+    #arr_list.append(tuple3)
+    arr_list.append(tuple4)
+    print(tuple4)
+    for cur_tuple in arr_list:
+        arr = cur_tuple[0]
+        target = cur_tuple[1]
+        print(find3Sum(arr, target))
+        
+        
+Vmware VO 1
+integer to roman
+
+Vmware VO2
+maximum continious subarray 
+
+Vmware VO3
+Give a dataset of 25 columns of running isntance, predict if it is going to be down/hacked in 5 mins
+dataset 
+
+Resource-Id	V1	V2	V3	V4	V5	V6	V7	V8	V9	V10	V11	V12	V13	V14	V15	V16	V17	V18	V19	V20	V21	V22	V23	V24	V25	V26	V27	V28	Alert
+10	-1.359807134	-0.072781173	2.536346738	1.378155224	-0.33832077	0.462387778	0.239598554	0.098697901	0.36378697	0.090794172	-0.551599533	-0.617800856	-0.991389847	-0.311169354	1.468176972	-0.470400525	0.207971242	0.02579058	0.40399296	0.251412098	-0.018306778	0.277837576	-0.11047391	100.0669281	0.128539358	-0.189114844	0.133558377	-0.021053053	FALSE
+10	1.191857111	0.266150712	0.166480113	0.448154078	0.060017649	-0.082360809	-0.078802983	0.085101655	-0.255425128	-0.166974414	1.612726661	INVALID_READINGS	0.489095016	-0.143772296	0.635558093	0.463917041	-0.114804663	-0.18336127	-0.145783041	-0.069083135	-0.225775248	-0.638671953	0.101288021	99.66015352	0.167170404	0.125894532	-0.008983099	0.014724169	FALSE
+10	-1.358354062	-1.340163075	1.773209343	0.379779593	-0.503198133	1.800499381	0.791460956	0.247675787	-1.514654323	0.207642865	0.624501459	0.066083685	0.717292731	-0.165945923	2.345864949	-2.890083194	1.109969379	-0.121359313	-2.261857095	0.524979725	0.247998153	0.771679402	0.909412262	99.31071904	-0.327641834	-0.139096572	-0.055352794	-0.059751841	FALSE
+10	-0.966271712	-0.185226008	1.79299334	-0.863291275	-0.01030888	1.247203168	0.23760894	0.377435875	-1.387024063	-0.054951922	-0.226487264	INVALID_READINGS	0.50775687	-0.287923745	-0.631418118	-1.059647245	-0.684092786	1.965775003	-1.23262197	-0.208037781	-0.108300452	0.005273597	-0.190320519	98.82442467	0.647376035	-0.221928844	0.062722849	0.061457629	FALSE
+10	-1.158233093	0.877736755	1.548717847	0.403033934	-0.407193377	0.095921462	0.592940745	-0.270532677	0.817739308	0.753074432	-0.822842878	0.53819555	1.345851593	-1.119669835	0.17512113	-0.451449183	-0.237033239	-0.038194787	0.803486925	0.40854236	-0.009430697	0.798278495	-0.13745808	100.141267	-0.206009588	0.502292224	0.21942223	0.215153147	FALSE
+10	-0.425965884	0.960523045	1.141109342	-0.16825208	0.420986881	-0.029727552	0.476200949	0.260314333	-0.568671376	-0.371407197	1.34126198	0.359893837	-0.358090653	-0.1371337	0.517616807	0.401725896	-0.058132823	0.068653149	-0.033193788	0.084967672	-0.208253515	-0.559824796	-0.026397668	99.62857342	-0.232793817	0.105914779	0.253844225	0.081080257	FALSE
+10	1.229657635	0.141003507	0.045370774	1.202612737	0.191880989	0.272708123	-0.005159003	0.08121294	0.464959995	-0.099254321	-1.416907243	INVALID_READINGS	-0.751062716	0.167371963	0.050143594	-0.443586798	0.002820512	-0.61198734	-0.045575045	-0.219632553	-0.167716266	-0.270709726	-0.154103787	99.21994458	0.750136936	-0.257236846	0.03450743	0.005167769	FALSE
+10	-0.644269442	1.417963545	1.074380376	-0.492199018	0.948934095	0.428118463	1.120631358	-3.807864239	0.615374731	1.249376178	-0.619467796	INVALID_READINGS	1.757964214	-1.32386522	0.686132504	-0.076126999	-1.222127345	-0.35822157	0.324504731	-0.156741852	1.94346534	-1.01545471	0.05750353	99.35029099	-0.415266566	-0.051634297	-1.206921081	-1.085339188	FALSE
+10	-0.894286082	0.286157196	-0.113192213	-0.27152613	2.66959866	3.721818061	0.370145128	0.851084443	-0.392047587	-0.410430433	-0.705116587	-0.110452262	-0.286253632	0.07435536	-0.32878305	-0.210077268	-0.499767969	0.118764861	0.570328167	0.052735669	-0.0734251	-0.268091632	-0.20423267	101.0115918	0.37320468	-0.384157308	0.011747356	0.14240433	FALSE
+10	-0.338261752	1.119593376	1.044366552	-0.222187277	0.499360806	-0.246761101	0.651583206	0.069538587	-0.736727316	-0.366845639	1.017614468	0.83638957	1.006843514	-0.443522817	0.150219101	0.739452777	-0.540979922	0.47667726	0.451772964	0.203711455	-0.246913937	-0.633752642	-0.120794084	99.61495007	-0.069733046	0.094198834	0.246219305	0.083075649	FALSE
+
+Vmware VO4
+How to deploy a ML pipleine?
+How to use AWS Sagemaker, why don't use it
+
+Tusimple 1
+Give a Board of nxm size
+give a list of [[0,1], [1,2]]  specify position of holes
+give a list of rectange [[rec_w, rec_h], [rec_w, rec_h].....]
+write a function to check if ALL rectangles can fit into board without covering hole
+
+
