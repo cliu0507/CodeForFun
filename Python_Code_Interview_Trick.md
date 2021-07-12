@@ -424,3 +424,34 @@ class Trie:
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
 ```
+
+16 Graph
+Graph的构建 比如说有几个节点 ['a','b','c']
+
+一种比较方便的graph datastructure 是 
+
+```
+from collections import defaultdict
+graph = defaultdict(defaultdict)
+
+# add edge
+graph['a']['b'] = edge_weight
+
+# check outdegree
+len(len(graph['a']))
+
+# iterate all edge from a to others
+for des, edge_weight in graph['a'].items():
+
+```
+
+另外一种比较复杂的 data structure
+```
+hashmap = {
+0: 'a',
+1: 'b',
+2 :'c',
+}
+
+adj_matrix = [[0] * 3 for _ in range(3)]
+```
