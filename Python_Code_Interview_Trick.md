@@ -201,6 +201,10 @@ N = 1000 基本上支持 N^3 算法
 	1. dijkstra algorithm - single source all destination:
 		time: O(N * N) if use adjacent matrix, O(Nlogn) if use heap
 		space:O(N + E)
+		
+		
+		
+		
 	2. Bellmon-Ford algorithm - single source all destination: (DP)
 		time : O(N * E),
 		space: O(NE)
@@ -208,6 +212,12 @@ N = 1000 基本上支持 N^3 算法
 	3. Floyd-warshall (all pairs). any source to all destination
 		time: O(N^3)
 		space: O(N*N)
+
+dijstrat algorithm 实现：
+https://www.geeksforgeeks.org/python-program-for-dijkstras-shortest-path-algorithm-greedy-algo-7/
+解释
+https://www.jianshu.com/p/ff6db00ad866
+
 
 9.  
 dijstra algorithm with heap:
