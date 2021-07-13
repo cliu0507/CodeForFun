@@ -221,3 +221,71 @@ a: use heap . keep a min heap to maintain the order. T(n) = o(nlogn)
 6. how to improve to get rid of nlogn?
 a: don't know
 
+Reddit
+You are building a new feature which requires the number of total page views for a given subreddit from the past 7 days. Traffic stats are available in a data store by subreddit name and date range. The response from the data store is a json, which is provided below
+{
+  '2019-09-30': {
+    'android':    {'pageviews': 818019, 'uniques': 202770},
+    'ios':        {'pageviews': 543987, 'uniques': 241062},
+    'mobile web': {'pageviews': 168518, 'uniques': 109986},
+    'new reddit': {'pageviews': 196908, 'uniques': 109611},
+    'old reddit': {'pageviews': 660134, 'uniques': 123657}},
+  '2019-10-01': {
+    'android':    {'pageviews': 1048749, 'uniques': 283306},
+    'ios':        {'pageviews': 828792, 'uniques': 390098},
+    'mobile web': {'pageviews': 184459, 'uniques': 115771},
+    'new reddit': {'pageviews': 398615, 'uniques': 233145},
+    'old reddit': {'pageviews': 907138, 'uniques': 196448}},
+  '2019-10-02': {
+  
+  
+from datetime import datetime
+import time
+import collections
+
+def dateDiff(date):
+    date_format = "%Y-%m-%d"
+    a = datetime.strptime(date, date_format)
+    #cur_date = time.strftime(date_format) 
+    cur_date = datetime.strptime("2020-01-23", date_format)
+    #print(cur_date)
+    #print(a)
+    delta = cur_date - a
+    return delta.days
+
+def countPageView(data):
+    '''
+    input: dict{dict{}}
+    output: int
+    '''
+    
+    date_list = list(data.keys())
+    date_list.sort()
+    
+    left = 0
+    right = 0
+    
+    globla_res = 0
+    cur_views = 0
+    # initialize right
+    while i < len(date_list) and j < len(date_list):
+        cur_views += helper(data[j])
+        j 
+    
+    
+    '''
+    res_dict = collections.defaultdict(int)
+    
+    for date, platform_dict in data.items():
+        if dateDiff(date) < 7:
+            for platform, views_dict in platform_dict.items():
+                res_dict[platform] += int(views_dict['pageviews'])
+    
+    a = [(views, platform) for platform, views in res_dict.items()]
+    a.sort()
+    '''
+    return a
+    
+       
+total = countPageView(data)
+print(total) 
