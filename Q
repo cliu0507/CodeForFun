@@ -289,3 +289,115 @@ def countPageView(data):
        
 total = countPageView(data)
 print(total) 
+
+
+
+Weride Phone
+# Libraries Included:
+# Numpy, Scipy, Scikit, Pandas
+
+# // Q1. Given an array with size n, return the maximum consecutive subarray sum
+# // e.g. [-1,2,3,4,-2,100] -> 2+3+4+-2+100
+import sys
+print("Hello, world!")
+
+'''
+def maxSum(arr):
+    
+    
+    if len(arr) == 0:
+        return 0
+    
+    dp[i] => maximum of subarry sum with arr[i] as ending element
+    
+    dp[i+1] = 
+    case 1: 
+      #if arr[i+1] < 0:
+          dp[i+1] = max(arr[i+1], dp[i] + arr[i])
+      #if arr[i+1] >= 0:
+          #dp[i+1] = max(arr[i+1], dp[i] + arr[i])
+    N = len(arr)
+    dp = [-sys.maxsize] * N
+    dp[0] = arr[0]
+    
+    res = dp[0]
+    for i in range(0, N-1):
+        dp[i+1] = max(arr[i+1], dp[i] + arr[i+1])
+        res = max(res, dp[i+1])
+    #print(dp)
+    return res
+
+if __name__ == '__main__':
+    arr = [-2,-3, -1]
+    print(maxSum(arr))
+    
+'''
+    
+# Q2 Given a list, rotate the list to the right by k places, where k is non-negative.For example: Given 1->2->3->4->5->NULL and k = 2, return 4->5->1->2->3->NULL. You might want to define the necessary classes and helper functions.
+
+
+class LinkedNode:
+    def __init__(self, value):
+        self.val = value
+        self.next = None
+        
+def rotate(node, k):
+    
+    
+    if not node or not node.next:
+        return node
+    
+    head = node
+    tail = None
+    
+    cur = head
+    length = 1
+    while cur.next:
+        length += 1
+        cur = cur.next
+    tail = cur
+    
+    k = k % length
+    if k == 0:
+        return head
+    
+    cur = head
+    left_cnt = length - k
+    right_cnt = k
+    
+    i = 0
+    prev = None
+    while i < left_cnt:
+        prev = cur
+        cur = cur.next
+        i += 1
+    new_head = cur
+    prev.next = None
+    
+    tail.next = head
+    
+    return new_head
+    
+def printList(node):
+    while node:
+        print(node.val)
+        node = node.next
+    
+
+    
+n1 = LinkedNode(1)
+n2 = LinkedNode(2)
+n3 = LinkedNode(3)
+n4 = LinkedNode(4)
+n5 = LinkedNode(5)
+n1.next = n2
+n2.next = n3
+n3.next = n4
+n4.next = n5
+
+#printList(n1)
+
+temp =rotate(n1, 5)
+printList(temp)
+
+        
