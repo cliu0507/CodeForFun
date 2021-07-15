@@ -400,4 +400,103 @@ n4.next = n5
 temp =rotate(n1, 5)
 printList(temp)
 
+
+
+Clari Phone interview
+
+'''
+Find longest decreasing subsquence
+
+[55,43,101,99,83,42,1,73,52,89, 20, 15, 10, 5] 
+
+101, 99, 83, 73, 52, 20, 15, 10, 5
+
+'''
+
+import collections
+
+import sys
+def buildGraph(arr):
+    
+    
+    
+    
+    N = len(arr)
+    
+    mapping = {}
+    for i, value in enumerate(arr):
+        mapping[i] = value
         
+    graph = [[10000] * N for _ in range(N)]
+    
+    
+    
+    for i in range(N):
+        for j in range(i, N):
+            if arr[i] > arr[j]:
+                # a valid edge between two vertice
+                graph[i][j] = 1
+                
+    for i in range(N):
+        graph[i][i] = 0
+    
+    return graph
+
+def findShortestPath(node_ind, graph):
+    N = len(graph)
+    A = set()
+    B = set()
+    
+    A.add(node_ind)
+    
+    minimum = [10000] * N
+    minimum[node_ind] = 0
+    
+    
+    for i in range(N):
+        if i != node_ind:
+            B.add(i)
+    
+    while B != set():
+        dis_list = []
+        
+        for i in A:
+            for j in B:
+                #cur_dis = graph[i][j]
+                cur_dis = minimum[i] + graph[i][j]
+                dis_list.append((cur_dis,j))
+        print(dis_list, 'debug')
+        dis_list.sort()
+        target_ind = dis_list[0][1]
+        
+        if minimum[target_ind] > minimum[i] + graph[i][target_ind]:
+            minimum[target_ind] = minimum[i] + graph[i][target_ind]
+        B.remove(target_ind)
+        A.add(target_ind)
+    print(minimum)
+    temp = [value for value in minimum]
+    temp.sort()
+    print(temp)
+    maximum_path = temp[-1]
+    target_ind = minimum.index(maximum_path)
+    return target_ind
+
+def findLong(arr):
+    res = []
+    graph = buildGraph(arr)
+    
+    for start_node in len(graph):
+        # different starting node
+        
+        bestEndNode = findShortestPath(start_node,graph)
+        
+    return 
+
+if __name__ == '__main__':
+    arr = [4,3,2,1]
+    g = buildGraph(arr)
+    print(g)
+    
+    res = findShortestPath(1,g)
+    print(res)
+
