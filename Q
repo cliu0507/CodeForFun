@@ -500,3 +500,81 @@ if __name__ == '__main__':
     res = findShortestPath(1,g)
     print(res)
 
+
+Abnormal Security 
+
+"""
+Train a classifier to predict whether a URL is malicious. For this challenge we would like to see implementation of an ML-based classifier:
+  (1) heuristic classifier uses only historical domain counts (as we discussed in the onsite interview) to classify each url. This should not use any ML models, simply python logic and a historical count. 
+  (2) ML-based classifier to predict whether a URL is malicious (this can be simply a logistic regression model with various features, you can consider either features of the URLs or features based on the data we have)
+
+
+Performance evaluation:
+  For both classifiers please include the following evaluations
+  - Number of false positives on test set
+  - Number of false negatives on test set
+  - Precision of final classifier on test set
+  - Recall of final classifier on test set
+
+
+Resulting artifacts
+  (1) [~1 hr] Code to complete challenges above with clear printouts of the classifier performance evaluations
+  (2) [~30 minutes] Short design doc on how you would solve this real problem in a 3-month time frame. Please discuss both software design and ML experiment design (feel free to borrow some inspiration from this blog: https://towardsdatascience.com/how-you-should-design-ml-engineering-projects-9af1930a4e2b)
+"""
+
+import requests
+import pandas as pd
+import numpy as np
+from io import StringIO
+from sklearn import metrics
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+
+# Read the data from S3.
+CSV_URL = 'https://s3.amazonaws.com/abnormalsecurity-public/urls_interview.csv'
+with requests.Session() as s:
+    download = s.get(CSV_URL)
+    decoded_csv = download.content.decode('utf-8')
+
+# Read the data into a pandas DataFrame
+df = pd.read_csv(StringIO(decoded_csv), sep='\t', names=['label', 'url'])
+good_urls = list(df[df['label'] == 0]['url'])
+bad_urls = list(df[df['label'] == 1]['url'])
+
+# Take a look at some of the data.
+print('BAD:')
+print(bad_urls[1:10])
+print('GOOD:')
+print(good_urls[1:10])
+
+urls = df['url']
+y = np.array((df['label'] == 1).apply(int))
+
+# Train test split
+url_train, url_test, y_train, y_test = train_test_split(urls, y, test_size=0.5, random_state=0, shuffle=True)
+
+# Define a featurization function.
+def featurize(url):
+    return {
+        'is_dotcom': int('.com' in url),# dummy feature
+    }
+
+def featurize_urls(url_dataset):
+    return pd.DataFrame.from_records([featurize(url) for url in list(url_dataset)])
+
+# Create test and train data.
+X_train, X_test = featurize_urls(url_train), featurize_urls(url_test)
+classifier = LogisticRegression()
+classifier.fit(X_train, y_train)
+
+# Apply the model to the test data and calculate precision/recall
+y_pred = classifier.predict_proba(X_test)[:,1]
+precision, recall, thresholds = metrics.precision_recall_curve(y_test, y_pred)
+pr_auc = metrics.auc(recall, precision)
+
+# Print out some stats about the model precision.
+print("PR-AUC: {}".format(pr_auc))
+print("# of False Positives: {}".format("FILL THIS IN"))
+print("# of True Positives: {}".format("FILL THIS IN"))
+print("# of False Negatives: {}".format("FILL THIS IN"))
+
