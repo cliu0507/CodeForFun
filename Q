@@ -502,7 +502,8 @@ if __name__ == '__main__':
 
 
 Abnormal Security 
-
+dataset
+CSV_URL = 'https://s3.amazonaws.com/abnormalsecurity-public/urls_interview.csv'
 """
 Train a classifier to predict whether a URL is malicious. For this challenge we would like to see implementation of an ML-based classifier:
   (1) heuristic classifier uses only historical domain counts (as we discussed in the onsite interview) to classify each url. This should not use any ML models, simply python logic and a historical count. 
@@ -529,6 +530,10 @@ from io import StringIO
 from sklearn import metrics
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+
+import re
+from urllib.parse import urlparse
 
 # Read the data from S3.
 CSV_URL = 'https://s3.amazonaws.com/abnormalsecurity-public/urls_interview.csv'
@@ -553,28 +558,115 @@ y = np.array((df['label'] == 1).apply(int))
 # Train test split
 url_train, url_test, y_train, y_test = train_test_split(urls, y, test_size=0.5, random_state=0, shuffle=True)
 
+
+
+print(url_train)
+print(y_train)
+
+
+import re
+
+
+def helper_parse_url(url):
+    temp = urlparse(url)
+    domain = temp.netloc
+    path = temp.path
+    cnt_path = len(path.split('/'))
+    return cnt_path
+
+def helper_maximum_length_path(url):
+    temp = urlparse(url)
+    domain = temp.netloc
+    path = temp.path
+    
+    path = path.replace('?','/')
+    cnt_path_list = path.split('/')
+    
+    length_list = []
+    for path in cnt_path_list:
+        length_list.append(len(path))
+    if max(length_list) > 90:
+        return True
+    else:
+        return False
+    #return max(length_list)
+
+def helper_is_valid_http(url):
+    regex = re.compile(
+        r'^(?:http|ftp)s?://' # http:// or https://
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
+        r'localhost|' #localhost...
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+        r'(?::\d+)?' # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    return re.match(regex, url) is not None 
+
 # Define a featurization function.
 def featurize(url):
     return {
-        'is_dotcom': int('.com' in url),# dummy feature
+        #'is_dotcom': int('.com' in url),# dummy feature
+        'is_dotcomdot': int('.com.' in url),
+        'max_path_length': int(helper_maximum_length_path(url)),
+        'contain_pay': int('pay' in url),
+        'contain_login': int('login' in url),
+        'contain_logon': int('logon' in url),
+        'contain_auth': int('auth' in url),
+        'contain_signin': int('sign' in url),
+        'contain_bank': int('bank' in url),
+        'contain_account': int('account' in url),
+        'contain_php': int('.php' in url),
+        'contain_redirect': int('redirect' in url),
+        #'dummy': 0,
+        #'is_valid_url': int(helper_is_valid_http(url)),
+        #'cnt_path':int(helper_parse_url(url)),
     }
 
 def featurize_urls(url_dataset):
     return pd.DataFrame.from_records([featurize(url) for url in list(url_dataset)])
 
+
+c = featurize_urls(url_train)
+print(c)
+
+
+
 # Create test and train data.
 X_train, X_test = featurize_urls(url_train), featurize_urls(url_test)
-classifier = LogisticRegression()
+classifier = LogisticRegression(class_weight='balanced')
+
+
 classifier.fit(X_train, y_train)
 
 # Apply the model to the test data and calculate precision/recall
 y_pred = classifier.predict_proba(X_test)[:,1]
 precision, recall, thresholds = metrics.precision_recall_curve(y_test, y_pred)
 pr_auc = metrics.auc(recall, precision)
+print(precision, recall,thresholds)
+
 
 # Print out some stats about the model precision.
-print("PR-AUC: {}".format(pr_auc))
-print("# of False Positives: {}".format("FILL THIS IN"))
-print("# of True Positives: {}".format("FILL THIS IN"))
-print("# of False Negatives: {}".format("FILL THIS IN"))
 
+print("PR-AUC: {}".format(pr_auc))
+
+y_test.tolist()
+
+for i,threshold in enumerate(thresholds):
+    y_assign = []
+    for y_pred_value in y_pred:
+        if y_pred_value >= threshold:
+            y_assign.append(1)
+        else:
+            y_assign.append(0)
+    #print(y_test, np.array(y_assign))
+    c = confusion_matrix(y_test, np.array(y_assign))
+    #print(c)
+    print('Threshold is : ', threshold)
+    print("False Positives Rate: {}",float(c[1][0]/float(c[1][0] + c[1][1])))
+    print("True Positives Rate:{}", float(c[0][0]/float(c[0][0] + c[0][1])))
+    print("False Negatives Rate: {}",float(c[0][1]/float(c[0][0] + c[0][1])))
+    
+    print("# of False Positives: {}".format(c[1][0]))
+    print("# of True Positives: {}".format(c[0][0]))
+    print("# of False Negatives: {}".format(c[0][1]))
+    
+    print('\n')
