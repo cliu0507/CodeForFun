@@ -878,3 +878,64 @@ def solution(example_accounts):
             if device_parent != first_parent:
                 parent[device_parent] = first_parent
     
+    
+    
+#2D line fitting
+#input: a set of 2d points
+#output: y=ax+b
+#loss,  gradient, learning, a and b
+
+import torch.nn as nn
+import torch
+
+class NeuralNet(nn.Module):
+    def __init__(self, input_size):
+        super(NeuralNet, self).__init__()
+        self.fc = nn.Linear(input_size, 1)
+        
+    def forward(self, x):
+        out = self.fc(x)
+        
+        
+def fit(x, y)
+    '''
+    x is list of [,,,,,,]s
+    y is list of value (float)
+    '''
+    
+    input_size = len(x[0])
+    model = NeuralNet(input_size)
+    
+    
+    # call a helper function to get train/test dataloader
+    train_loader, test_loader = getDataLoader(x, y)
+    
+    # Loss and optimizer
+    criterion = nn.MSELoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.0001)
+    
+    total_step = len(train_loader)
+    for epoch in range(100):
+        for x_feature, y_value in train_loader:
+            
+            # forward
+            outputs = model(x_feature)
+            loss = criterion(outputs, labels)
+            
+            # backward
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+    
+    
+    
+    # test
+    
+    with torch.no_grad():
+        for x_feature, y_value in test_loader:
+            outputs = model(x_feature)
+            print(x_feature, outputs)
+            
+            
+    
+    
