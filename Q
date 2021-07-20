@@ -766,4 +766,115 @@ if __name__ == '__main__':
     print(c)
     print(st.get(0))
     
+   
+   
+   Apple Fear Phone
+   
+   input = [
+    {"sender": "bob", "receiver": "sarah", "timestamp":10000},
+    {"sender": "bob", "receiver": "sarah", "timestamp":10030},
+    {"sender": "bob", "receiver": "sarah", "timestamp":12000},
+    {"sender": "bob", "receiver": "sarah", "timestamp":13400},
+    {"sender": "sherry", "receiver": "john", "timestamp":128987},
+    {"sender": "sherry", "receiver": "linda", "timestamp":239187},
+    {"sender": "sherry", "receiver": "haly", "timestamp":18398},
+    {"sender": "alice", "receiver": "jack", "timestamp":103947}
+]
+
+# Write a function that can take in a list of messages and return the user who sent messages to the most unique recipients. 
+# We assume here that each sender or receiver has a unique name.
+
+output = "sherry"
+
+
+import collections
+
+def findBusySender(data):
+    '''
+    data: List of dictionary
+    output: string of sender name
+    '''
+    hashmap = collections.defaultdict(set)
+    
+    # update hashmap
+    for dic in data:
+        sender_name = dic['sender']
+        receiver_name = dic['receiver']
+        hashmap[sender_name].add(receiver_name)
+    
+    # sort by popularity
+    lis = []
+    
+    for sender, receiver_set in hashmap.items():
+        lis.append((len(receiver_set), sender))
+    
+    lis.sort(reverse=True)
+    return lis[0][1]
+    
+    
+print(findBusySender(input))
+
+#Part II*: Write a function that accepts a list of account records and returns a list of all accounts that share a device.
+
+class Account:
+    def __init__(self, account_id, device_ids):
+        self.account_id = account_id
+        self.device_ids = device_ids
+        
+    # code for pretty printing
+    def __repr__(self):
+        return "Account(account_id='{}', device_ids={})".format(self.account_id, self.device_ids)
+
+example_accounts= [
+    Account(account_id="alice@icloud.com", device_ids=[1, 2]),
+    Account(account_id="betty@icloud.com", device_ids=[3]),
+    Account(account_id="a@icloud.com", device_ids=[1, 4]),
+    Account(account_id="daniel@icloud.com", device_ids=[5, 6]),
+    Account(account_id="erica.watson@icloud.com", device_ids=[7, 8]),
+    Account(account_id="e.w@icloud.com", device_ids=[7, 9]),
+    Account(account_id="e.watson@icloud.com", device_ids=[9, 10]),
+    Account(account_id="fred.hampton@icloud.com", device_ids=[11, 12]),
+    Account(account_id="f.h@icloud.com", device_ids=[13, 14]),
+    Account(account_id="f.hampton@icloud.com", device_ids=[11, 13])
+ ]
+
+grouped_accounts = [
+    ["alice@icloud.com", "a@icloud.com"],
+    ["betty@icloud.com"], 
+    ["daniel@icloud.com"],
+    ["erica.watson@icloud.com", "e.w@icloud.com", "e.watson@icloud.com"],
+    ["fred.hampton@icloud.com", "f.h@icloud.com", "f.hampton@icloud.com"]
+]
+
+
+def find(parent, i)
+
+def solution(example_accounts):
+    device_map = collections.defaultdict(set)
+    account_set = set()
+    for account in example_accounts:
+        account_id = account.account_id
+        device_ids = account.device_ids
+        account_set.add(account_id)
+        for device_id in device_ids:
+            device_map[device_id].add(account_id)
+    
+    '''
+    1: [alice , a], 2: [alice, f, h]
+    '''
+    
+    parent = collections.defaultdict(str)
+    
+    for account in account_set:
+        parent[account] = account
+    
+    for device_list in device_map:
+        
+        first_device = device_list[0]
+        first_parent = find(first_device)
+        
+        for device in device_list[1:]:
+            device_parent = find(device)
+            if device_parent != first_parent:
+                parent[device_parent] = first_parent
     
