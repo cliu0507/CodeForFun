@@ -670,3 +670,100 @@ for i,threshold in enumerate(thresholds):
     print("# of False Negatives: {}".format(c[0][1]))
     
     print('\n')
+    
+    
+    Waymo Phone
+    
+    # Implement a snapshottable map with an interface defined as follows:
+
+# interface SnapshottableMap<K, V> {
+#   void set(K key, V value);
+#   V get(K key);
+#   int snapshot(); // takes a snapshot and returns some id associated with it
+#   V snapshotGet(K key, int snapshotId);
+# }
+
+import copy
+
+# set(0, 'a')
+# set(0, 'b')
+
+# {
+# 0: [a => snapshot1,b=>snapshot4,c=> snapshot10 ,d => snapshot12]
+# }
+
+# [
+#     [snapshot1: a]
+#     [snapshot4: b]
+#     [snapshot10:c]
+#     [snapshot12:d]
+# ]
+    
+# snapshotGet(0, snapshot9) 
+
+
+import collections
+
+class snapShotMap:
+    '''snapshottable map class
+    
+    '''
+    def __init__(self):
+        self.cur_snapshot = 0
+        self.dic = collections.defaultdict(list)
+        
+        
+    
+    def set(self, key, value):
+        
+        if len(self.dic[key]) == 0:
+            self.dic[key].append((self.cur_snapshot, value))
+        else:
+            if self.dic[key][-1][1] == value:
+                pass
+            else:
+                self.dic[key].append((self.cur_snapshot, value))
+        print(self.dic[key])
+                
+    def get(self, key):
+        return self.dic[key][-1][1]
+        
+    def snapshot(self):
+        
+        #temp = self.cur_snapshot
+        self.cur_snapshot = self.cur_snapshot + 1
+        return self.cur_snapshot
+        
+    
+    def snapshotGet(self, key, snapshotId):
+        lis_to_search = self.dic[key]
+        prev_value = self.dic[key][0][1]
+        for i, item in enumerate(lis_to_search):
+            snapshot_id = item[0]
+            value = item[1]
+            if snapshot_id == snapshotId:
+                return value
+            if snapshot_id > snapshotId:
+                return prev_value
+            prev_value = value
+        
+        return None
+            
+if __name__ == '__main__':
+    
+    st = snapShotMap()
+    st.set(0, 'a')
+    st.set(1, 'b')
+    st.set(2, 'c')
+    st.set(3, 'd')
+    
+    st.set(0, 'x')
+    
+    print(st.get(0))
+    snapshot_id = st.snapshot()
+    st.set(0, 'z')
+    c = st.snapshotGet(0, snapshot_id)
+    print(c)
+    print(st.get(0))
+    
+    
