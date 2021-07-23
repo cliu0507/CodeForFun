@@ -938,4 +938,87 @@ def fit(x, y)
             
             
     
+   SnapChat
+   # (a, b) a < b (b, c) b < c, (a, c) a < c--> valid
+#(a, b) a < b (b, c) b < c, (c, a) c < a --> invalid
+
+#(a, 1), (2, b), (a, b) -- valid
+# (a, 1), (2, b), (b, a) -- invalid
+# a < b, b < c, c < a => invalid 
+# a < b , b < c, c < d
+import collections
+
+
+def dfs(graph, node, visited):
+    #print(node, visited)
+    visited.add(node)
+    print( node, visited, graph[node])
+    for neighbour in graph[node]:
+        if neighbour in visited:
+            print(node, visited,'test5')
+            return True # means found a cycle
+        else:
+            if dfs(graph, neighbour, visited):
+                return True
+    return False
     
+
+def isValid(pairs):
+    
+    # build a graph
+    
+    graph = collections.defaultdict(list)
+    node_set = set()
+    num_set = set()
+    
+    
+    for pair in pairs:
+        if isinstance(pair[0], int):
+            num_set.add(pair[0])
+        else:
+            node_set.add(pair[0])
+            
+        if isinstance(pair[1], int):
+            num_set.add(pair[1])
+        else:
+            node_set.add(pair[1])    
+        graph[pair[0]].append(pair[1])
+    
+    num_list = sorted(list(num_set))
+    
+    for i in range(len(num_list)):
+        for j in range(i, len(num_list)):
+            if num_list[i] < num_list[j]:
+                graph[num_list[i]].append(num_list[j])
+        
+    print(graph)
+    
+    #visited = set()
+    for node in node_set:
+        
+        visited = set()
+        print(node, visited,'test4')
+        if node not in visited:
+            print(graph, node, visited,'test3')
+            res = dfs(graph, node, visited)
+            print(res)
+            if res is True: # find a cycle
+                print(node, visited, 'test1')
+                return "invalid"
+            
+    for node in num_set:
+        visited = set()
+        if node not in visited:
+            res = dfs(graph, node, visited)
+            if res is True: # find a cycle
+                print(node, visited, 'test')
+                return "invalid"
+                
+    return "valid"
+    
+    # check if there is cycle in the directed graph
+    
+    
+pairs = [('a',1), (2,'b'), ('a', 'b')]
+res = isValid(pairs)
+print(res)
